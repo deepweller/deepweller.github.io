@@ -1,2 +1,2 @@
-프로젝트, 경력 기술서
-https://deepweller.github.io/resume
+박진영과 조유진의 결혼식
+[청첩장](https://deepweller.github.io/wedding)
