@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>박진영과 조유진의 결혼식</title>
+    <title>박진영과 조유진의 결혼식(2021.05.16)</title>
 
     <meta content="박진영과 조유진의 결혼식" name="description"/>
     <meta property="og:image" content="assets/img/wedding1.jpeg">
@@ -195,49 +195,70 @@
             <h3 class="text-secondary mb-0">Photo</h3>
             <h2 style="color: #848CB5" class="mb-5">갤러리</h2>
         </div>
-        <div id="gallery" class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
-            <figure itemprop="associatedMedia" itemscope>
+        <div id="gallery" class="gallery" itemscope>
+            <figure>
+                <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
+                <a name="image" href="assets/img/wedding1.jpeg" data-width="640" data-height="960">
+                  <!-- Thumbnail -->
+                  <img src="assets/img/wedding1.jpeg" itemprop="thumbnail">
+                </a>
+              </figure>
+            <figure>
               <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
-              <a href="assets/img/wedding2.jpeg" data-width="640" data-height="960">
+              <a name="image" href="assets/img/wedding2.jpeg" data-width="640" data-height="960">
                 <!-- Thumbnail -->
                 <img src="assets/img/wedding2.jpeg" itemprop="thumbnail">
               </a>
             </figure>
-            <figure itemprop="associatedMedia" itemscope>
+            <figure>
               <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
-              <a href="assets/img/wedding3.jpeg" data-width="640" data-height="960">
+              <a name="image" href="assets/img/wedding3.jpeg" data-width="640" data-height="960">
                 <!-- Thumbnail -->
                 <img src="assets/img/wedding3.jpeg" itemprop="thumbnail">
               </a>
             </figure>
-            <figure itemprop="associatedMedia" itemscope>
+            <figure>
+              <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
+              <a name="image" href="assets/img/wedding5.jpeg" data-width="755" data-height="960">
+                <!-- Thumbnail -->
+                <img src="assets/img/wedding5.jpeg" itemprop="thumbnail">
+              </a>
+            </figure>
+            <figure>
+              <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
+              <a name="image" href="assets/img/wedding6.jpeg" data-width="640" data-height="960">
+                <!-- Thumbnail -->
+                <img src="assets/img/wedding6.jpeg" itemprop="thumbnail">
+              </a>
+            </figure>
+            <figure>
                 <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
-                <a href="assets/img/wedding4.jpeg" data-width="960" data-height="640">
+                <a name="image" href="assets/img/wedding9.jpeg" data-width="685" data-height="960">
                   <!-- Thumbnail -->
-                  <img src="assets/img/wedding4.jpeg" itemprop="thumbnail">
+                  <img src="assets/img/wedding9.jpeg" itemprop="thumbnail">
                 </a>
-              </figure>
-              <figure itemprop="associatedMedia" itemscope>
+            </figure>
+            <figure>
                 <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
-                <a href="assets/img/wedding5.jpeg" data-width="755" data-height="960">
-                  <!-- Thumbnail -->
-                  <img src="assets/img/wedding5.jpeg" itemprop="thumbnail">
+                <a name="image" href="assets/img/wedding4.jpeg" data-width="960" data-height="640">
+                    <!-- Thumbnail -->
+                    <img src="assets/img/wedding4.jpeg" itemprop="thumbnail">
                 </a>
-              </figure>
-              <figure itemprop="associatedMedia" itemscope>
+            </figure>
+            <figure>
+              <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
+              <a name="image" href="assets/img/wedding7.jpeg" data-width="960" data-height="640">
+                <!-- Thumbnail -->
+                <img src="assets/img/wedding7.jpeg" itemprop="thumbnail">
+              </a>
+            </figure>
+            <figure>
                 <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
-                <a href="assets/img/wedding6.jpeg" data-width="640" data-height="960">
+                <a name="image" href="assets/img/wedding8.jpeg" data-width="960" data-height="640">
                   <!-- Thumbnail -->
-                  <img src="assets/img/wedding6.jpeg" itemprop="thumbnail">
+                  <img src="assets/img/wedding8.jpeg" itemprop="thumbnail">
                 </a>
-              </figure>
-              <figure itemprop="associatedMedia" itemscope>
-                <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
-                <a href="assets/img/wedding7.jpeg" data-width="960" data-height="640">
-                  <!-- Thumbnail -->
-                  <img src="assets/img/wedding7.jpeg" itemprop="thumbnail">
-                </a>
-              </figure>
+            </figure>
         </div>
         <!-- <div class="row no-gutters">
             <div class="col-lg-6">
@@ -444,7 +465,7 @@
       });
 
       // Define click event on gallery item
-      $('a').click(function(event){
+      $('a[name=image]').click(function(event){
 
         // Prevent location change
         event.preventDefault();
