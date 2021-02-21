@@ -499,6 +499,48 @@
       });
 
     }(jQuery));
+    
+    (function($){
+
+        // Init empty gallery array
+        var container = [];
+        var $link = $('a[name=map]'),
+            item = {
+                src: $link.attr('href'),
+                w: 3509,
+                h: 2481,
+                title: 'test'
+            };
+        container.push(item);
+
+        // Define click event on gallery item
+        $('a[name=map]').click(function(event){
+
+        // Prevent location change
+        event.preventDefault();
+
+        // Define object and gallery options
+        var $pswp = $('.pswp')[0],
+            options = {
+                index: 0,
+                bgOpacity: 0.85,
+                showHideOpacity: true,
+                closeEl:true,
+                captionEl: false,
+                fullscreenEl: false,
+                zoomEl: true,
+                shareEl: false,
+                counterEl: true,
+                arrowEl: true,
+                preloaderEl: true,
+            };
+
+        // Initialize PhotoSwipe
+        var gallery = new PhotoSwipe($pswp, PhotoSwipeUI_Default, container, options);
+        gallery.init();
+        });
+
+        }(jQuery));
   </script>
 
 </body>
