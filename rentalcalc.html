@@ -249,12 +249,14 @@
             calc_value = Math.floor(calc_value);
             calc_value = calc_value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
             $("#calc_value").text(calc_value);
+            return false;
         });
         $('#refresh_button').on("click tap touchstart", function() {
             document.getElementById("supply").value = '';
             document.getElementById("deposit").value = 0;
             document.getElementById("period").value = 12;
             $("#calc_value").text('');
+            return false;
         });
     });
 </script>
