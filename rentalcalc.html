@@ -232,7 +232,7 @@
         </div>
         <hr>
         <h1 style="text-align: center; color: #095484;"><span style="color: #666; font-size: 16px; font-weight: bold;">월 렌탈 예상금액 : </span><span style="color: #095484; font-size: 14px;">₩</span><span id="calc_value" style="color: #095484;"></span><span style="color: #095484; font-size: 14px;"> (부가세별도)</span></h1>
-        <p class="small" style="text-align: center;">각 개인 및 의뢰사의 신용도에 따라 렌탈 예상금액은 실제 산출금액과 상이 할 수 있습니다.. </small>
+        <p class="small" style="text-align: center;">각 개인 및 의뢰사의 신용도에 따라 렌탈 예상금액은 실제 산출금액과 상이 할 수 있습니다. </small>
         <div class="btn-block">
             <button type="button" id="calc_button">계산하기</button>
             <button type="button" id="refresh_button" style="background-color: whitesmoke; color: black;">초기화</button>
@@ -242,7 +242,8 @@
 <script>
     
     $(document).ready(function() {
-        $('#calc_button').on('click touchstart', function() {
+        var calcButton = document.getElementById("calc_button");
+        calcButton.addEventListener('click', function() {
             var supply = document.getElementById("supply").value;
             var deposit = document.getElementById("deposit").value;
             var period = document.getElementById("period").value;
@@ -251,14 +252,34 @@
             calc_value = calc_value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
             $("#calc_value").text(calc_value);
             return false;
-        });
-        $('#refresh_button').on('click touchstart', function() {
+        }, false);
+        
+        var refreshButton = document.getElementById("refresh_button");
+        refreshButton.addEventListener('click', function() {
             document.getElementById("supply").value = '';
             document.getElementById("deposit").value = 0;
             document.getElementById("period").value = 12;
             $("#calc_value").text('');
             return false;
-        });
+        }, false);
+
+        // $('#calc_button').on('click touchstart', function() {
+        //     var supply = document.getElementById("supply").value;
+        //     var deposit = document.getElementById("deposit").value;
+        //     var period = document.getElementById("period").value;
+        //     var calc_value = (supply * ( 1 + 0.065 * period / 12) - (deposit/100) * supply) / period;
+        //     calc_value = Math.floor(calc_value);
+        //     calc_value = calc_value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        //     $("#calc_value").text(calc_value);
+        //     return false;
+        // });
+        // $('#refresh_button').on('click touchstart', function() {
+        //     document.getElementById("supply").value = '';
+        //     document.getElementById("deposit").value = 0;
+        //     document.getElementById("period").value = 12;
+        //     $("#calc_value").text('');
+        //     return false;
+        // });
     });
 </script>
 </body>
