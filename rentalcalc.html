@@ -4,6 +4,7 @@
     <title>렌탈료 계산기</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
         html, body {
             min-height: 100%;
@@ -29,7 +30,7 @@
             color: red;
         }
         .small {
-            font-size: 10px;
+            font-size: 11px;
             line-height: 18px;
         }
         .testbox {
@@ -165,11 +166,11 @@
         <h1 style="text-align: center;">렌탈료 계산기</h1>
         <hr>
         <h4>공급가액*<span>*</span></h4>
-        <input type="text" name="name" />
+        <input type="text" id="supply" name="supply" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"/>
         <h4>보증금비율<span>*</span></h4>
         <div class="title-block">
-            <select>
-                <option value="0">0%</option>
+            <select id="deposit">
+                <option value="0" selected>0%</option>
                 <option value="10">10%</option>
                 <option value="20">20%</option>
                 <option value="30">30%</option>
@@ -177,7 +178,7 @@
         </div>
         <h4>렌탈기간<span>*</span></h4>
         <div class="title-block">
-            <select>
+            <select id="period">
                 <option value="12" selected>12개월</option>
                 <option value="13">13개월</option>
                 <option value="14">14개월</option>
@@ -230,13 +231,32 @@
             </select>
         </div>
         <hr>
-        <h1 style="text-align: center; color: #095484;"><span style="color: #666; font-size: 16px; font-weight: bold;">월 렌탈 예상금액 </span><span style="color: #095484; font-size: 14px;">₩</span>3,999,000<span style="color: #095484; font-size: 14px;">(부가세별도)</span></h1>
+        <h1 style="text-align: center; color: #095484;"><span style="color: #666; font-size: 16px; font-weight: bold;">월 렌탈 예상금액 : </span><span style="color: #095484; font-size: 14px;">₩</span><span id="calc_value" style="color: #095484;"></span><span style="color: #095484; font-size: 14px;"> (부가세별도)</span></h1>
         <p class="small" style="text-align: center;">각 개인 및 의뢰사의 신용도에 따라 렌탈 예상금액은 실제 산출금액과 상이 할 수 있습니다. </small>
         <div class="btn-block">
-            <button type="submit" href="/">계산하기</button>
-            <button type="submit" style="background-color: whitesmoke; color: black;" href="/">초기화</button>
+            <button type="button" id="calc_button">계산하기</button>
+            <button type="button" id="refresh_button" style="background-color: whitesmoke; color: black;">초기화</button>
         </div>
     </form>
 </div>
+<script>
+document.getElementById("calc_button").addEventListener("click", calc);
+document.getElementById("refresh_button").addEventListener("click", refresh);
+function calc() {
+    var supply = document.getElementById("supply").value;
+    var deposit = document.getElementById("deposit").value;
+    var period = document.getElementById("period").value;
+    var calc_value = (supply * ( 1 + 0.065 * period / 12) - (deposit/100) * supply) / period;
+    calc_value = Math.floor(calc_value);
+    calc_value = calc_value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    $("#calc_value").text(calc_value);
+}
+function refresh() {
+    document.getElementById("supply").value = '';
+    document.getElementById("deposit").value = 0;
+    document.getElementById("period").value = 12;
+    $("#calc_value").text('');
+}
+</script>
 </body>
 </html>
