@@ -4,9 +4,159 @@
     <title>렌탈료 계산기</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <script src="vendor/jquery/jquery.min.js"></script>
     <style>
-        
+        html, body {
+            min-height: 100%;
+        }
+        body, div, form, input, select {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+        h1, h4 {
+            margin: 15px 0 4px;
+            font-weight: 400;
+        }
+        h4 {
+            margin: 20px 0 4px;
+            font-weight: 400;
+        }
+        span {
+            color: red;
+        }
+        .small {
+            font-size: 11px;
+            line-height: 18px;
+        }
+        .testbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: inherit;
+            padding: 3px;
+        }
+        form {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px #ccc;
+        }
+        input {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            vertical-align: middle;
+        }
+        input:hover, textarea:hover, select:hover {
+            outline: none;
+            border: 1px solid #095484;
+            background: #e6eef7;
+        }
+        .title-block select, .title-block input {
+            margin-bottom: 10px;
+        }
+        select {
+            padding: 7px 0;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            background: transparent;
+        }
+        select, table {
+            width: 100%;
+        }
+        option {
+            background: #fff;
+        }
+        .day-visited, .time-visited {
+            position: relative;
+        }
+        input[type="date"]::-webkit-inner-spin-button {
+            display: none;
+        }
+        input[type="time"]::-webkit-inner-spin-button {
+            margin: 2px 22px 0 0;
+        }
+        .day-visited i, .time-visited i, input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            top: 8px;
+            font-size: 20px;
+        }
+        .day-visited i, .time-visited i {
+            right: 5px;
+            z-index: 1;
+            color: #a9a9a9;
+        }
+        [type="date"]::-webkit-calendar-picker-indicator {
+            right: 0;
+            z-index: 2;
+            opacity: 0;
+        }
+        .question-answer label {
+            display: block;
+            padding: 0 20px 10px 0;
+        }
+        .question-answer input {
+            width: auto;
+            margin-top: -2px;
+        }
+        th, td {
+            width: 18%;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            vertical-align: unset;
+            line-height: 18px;
+            font-weight: 400;
+            word-break: break-all;
+        }
+        .first-col {
+            width: 25%;
+            text-align: left;
+        }
+        textarea {
+            width: calc(100% - 6px);
+        }
+        .btn-block {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background-color: #095484;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0666a3;
+        }
+        @media (min-width: 568px) {
+            .title-block {
+                display: flex;
+                justify-content: space-between;
+            }
+            .title-block select {
+                width: 30%;
+                margin-bottom: 0;
+            }
+            .title-block input {
+                width: 31%;
+                margin-bottom: 0;
+            }
+            th, td {
+                word-break: keep-all;
+            }
+        }
     </style>
 </head>
 <body>
@@ -81,7 +231,7 @@
         </div>
         <hr>
         <h1 style="text-align: center; color: #095484;"><span style="color: #666; font-size: 16px; font-weight: bold;">월 렌탈 예상금액 : </span><span style="color: #095484; font-size: 14px;">₩</span><span id="calc_value" style="color: #095484;"></span><span style="color: #095484; font-size: 14px;"> (부가세별도)</span></h1>
-        <p class="small" style="text-align: center;">각 개인 및 의뢰사의 신용도에 따라 렌탈 예상금액은 실제 산출금액과 상이 할 수 있습니다 </small>
+        <p class="small" style="text-align: center;">각 개인 및 의뢰사의 신용도에 따라 렌탈 예상금액은 실제 산출금액과 상이 할 수 있습니다. </small>
         <div class="btn-block">
             <button type="button" id="calc_button">계산하기</button>
             <button type="button" id="refresh_button" style="background-color: whitesmoke; color: black;">초기화</button>
@@ -98,8 +248,9 @@
             var calc_value = (supply * ( 1 + 0.065 * period / 12) - (deposit/100) * supply) / period;
             calc_value = Math.floor(calc_value);
             calc_value = calc_value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-            $("#calc_value").text(calc_value);
-            return false;
+            
+            var span = document.getElementById("calc_value");
+            span.textContent = calc_value;
         }, false);
         
         var refreshButton = document.getElementById("refresh_button");
@@ -107,8 +258,10 @@
             document.getElementById("supply").value = '';
             document.getElementById("deposit").value = 0;
             document.getElementById("period").value = 12;
-            $("#calc_value").text('');
-            return false;
+            
+            var span = document.getElementById("calc_value");
+            console.log(span);
+            span.textContent = "";
         }, false);
 </script>
 </body>
