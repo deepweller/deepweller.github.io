@@ -254,14 +254,14 @@
         }, false);
         
         var refreshButton = document.getElementById("refresh_button");
-        refreshButton.addEventListener('click', function() {
+        refreshButton.addEventListener('click', function(event) {
             document.getElementById("supply").value = '';
             document.getElementById("deposit").value = 0;
             document.getElementById("period").value = 12;
             
             var span = document.getElementById("calc_value");
-            console.log(span);
             span.textContent = "";
+            alert(event)
         }, false);
 </script>
 </body>
