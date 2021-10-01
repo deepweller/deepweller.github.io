@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <title>렌탈료 계산기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1><span style="color: #666; margin-left: 120px; font-weight: bold;">렌탈료 계산기</span></h1>
+        <el-divider></el-divider>
+        <el-form :model="form" :rules="rules" ref="form" label-width="120px">
+            <el-form-item label="공급가액" prop="supply">
+              <el-input v-model="form.supply" style="width: 50%;" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"></el-input>
+            </el-form-item>
+            <el-form-item label="보증금비율" prop="deposit">
+              <el-select v-model="form.deposit" placeholder="선택해주세요.">
+                <el-option label="0%" value=0></el-option>
+                <el-option label="10%" value=10></el-option>
+                <el-option label="20%" value=20></el-option>
+                <el-option label="30%" value=30></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="렌탈기간" prop="period">
+                <el-select v-model="form.period" placeholder="선택해주세요.">
+                    <el-option label="12개월" value="12"></el-option>
+                    <el-option label="13개월" value="13"></el-option>
+                    <el-option label="14개월" value="14"></el-option>
+                    <el-option label="15개월" value="15"></el-option>
+                    <el-option label="16개월" value="16"></el-option>
+                    <el-option label="17개월" value="17"></el-option>
+                    <el-option label="18개월" value="18"></el-option>
+                    <el-option label="19개월" value="19"></el-option>
+                    <el-option label="20개월" value="20"></el-option>
+                    <el-option label="21개월" value="21"></el-option>
+                    <el-option label="22개월" value="22"></el-option>
+                    <el-option label="23개월" value="23"></el-option>
+                    <el-option label="24개월" value="24"></el-option>
+                    <el-option label="25개월" value="25"></el-option>
+                    <el-option label="26개월" value="26"></el-option>
+                    <el-option label="27개월" value="27"></el-option>
+                    <el-option label="28개월" value="28"></el-option>
+                    <el-option label="29개월" value="29"></el-option>
+                    <el-option label="30개월" value="30"></el-option>
+                    <el-option label="31개월" value="31"></el-option>
+                    <el-option label="32개월" value="32"></el-option>
+                    <el-option label="33개월" value="33"></el-option>
+                    <el-option label="34개월" value="34"></el-option>
+                    <el-option label="35개월" value="35"></el-option>
+                    <el-option label="36개월" value="36"></el-option>
+                    <el-option label="37개월" value="37"></el-option>
+                    <el-option label="38개월" value="38"></el-option>
+                    <el-option label="39개월" value="39"></el-option>
+                    <el-option label="41개월" value="41"></el-option>
+                    <el-option label="42개월" value="42"></el-option>
+                    <el-option label="43개월" value="43"></el-option>
+                    <el-option label="43개월" value="43"></el-option>
+                    <el-option label="44개월" value="44"></el-option>
+                    <el-option label="45개월" value="45"></el-option>
+                    <el-option label="46개월" value="46"></el-option>
+                    <el-option label="47개월" value="47"></el-option>
+                    <el-option label="48개월" value="48"></el-option>
+                    <el-option label="49개월" value="49"></el-option>
+                    <el-option label="50개월" value="50"></el-option>
+                    <el-option label="51개월" value="51"></el-option>
+                    <el-option label="52개월" value="52"></el-option>
+                    <el-option label="53개월" value="53"></el-option>
+                    <el-option label="54개월" value="54"></el-option>
+                    <el-option label="55개월" value="55"></el-option>
+                    <el-option label="56개월" value="56"></el-option>
+                    <el-option label="57개월" value="57"></el-option>
+                    <el-option label="58개월" value="58"></el-option>
+                    <el-option label="59개월" value="59"></el-option>
+                    <el-option label="60개월" value="60"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-divider></el-divider>
+            <el-form-item>
+                <h1><span style="color: #666; font-size: 16px; font-weight: bold;">월 렌탈 예상금액 : </span><span style="color: #095484; font-size: 14px;">₩</span><span id="calc_value" style="color: #095484;">{{ value }}</span><span style="color: #095484; font-size: 14px;"> (부가세별도)</span></h1>
+                <span style="color: #666; font-size: 11px;">각 개인 및 의뢰사의 신용도에 따라 렌탈 예상금액은 실제 산출금액과 상이 할 수 있습니다.</span>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('form')">계산하기</el-button>
+                <el-button @click="resetForm('form')">초기화</el-button>
+            </el-form-item>
+          </el-form>
+    </div>
+
+<script>
+var app = new Vue({
+  el: '#app',
+  data() {
+      return {
+        value: '',
+        form: {
+          supply: '',
+          deposit: '',
+          preiod: ''
+        },
+        rules: {
+          supply: [
+            { required: true, message: '공급가액을 입력해주세요.', trigger: 'blur' }
+          ],
+          deposit: [
+            { required: true, message: '보증금비율을 선택해주세요.', trigger: 'change' }
+          ],
+          period: [
+            { required: true, message: '렌탈기간을 선택해주세요.', trigger: 'change' }
+          ],
+        }
+      }
+    },
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let calc_value = (this.form.supply * ( 1 + 0.065 * this.form.period / 12) - (this.form.deposit/100) * this.form.supply) / this.form.period;
+            calc_value = Math.floor(calc_value);
+            this.value = calc_value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
+})
+</script>
+</body>
+</html>
